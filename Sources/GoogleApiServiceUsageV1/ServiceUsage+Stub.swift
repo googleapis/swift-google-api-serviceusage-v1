@@ -35,11 +35,11 @@ extension Clients {
 
     func getService(
       request: GetServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.Service
+    ) async throws -> GoogleApiServiceUsageV1.Service
 
     func listServices(
       request: ListServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.ListServicesResponse
+    ) async throws -> GoogleApiServiceUsageV1.ListServicesResponse
 
     func batchEnableServices(
       request: BatchEnableServicesRequest, options: GoogleCloudGax.RequestOptions
@@ -47,7 +47,7 @@ extension Clients {
 
     func batchGetServices(
       request: BatchGetServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.BatchGetServicesResponse
+    ) async throws -> GoogleApiServiceUsageV1.BatchGetServicesResponse
 
     func listOperations(
       request: GoogleLongrunning.ListOperationsRequest, options: GoogleCloudGax.RequestOptions
@@ -112,7 +112,7 @@ extension Clients {
 
     public func getService(
       request: GetServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.Service {
+    ) async throws -> GoogleApiServiceUsageV1.Service {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.name as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.name' is not set or is empty")
@@ -127,12 +127,12 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleApiServiceusageV1.Service.self, from: data)
+        GoogleApiServiceUsageV1.Service.self, from: data)
     }
 
     public func listServices(
       request: ListServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.ListServicesResponse {
+    ) async throws -> GoogleApiServiceUsageV1.ListServicesResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -151,7 +151,7 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleApiServiceusageV1.ListServicesResponse.self, from: data)
+        GoogleApiServiceUsageV1.ListServicesResponse.self, from: data)
     }
 
     public func batchEnableServices(
@@ -178,7 +178,7 @@ extension Clients {
 
     public func batchGetServices(
       request: BatchGetServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.BatchGetServicesResponse {
+    ) async throws -> GoogleApiServiceUsageV1.BatchGetServicesResponse {
       let path = try { () throws -> Swift.String in
         guard let pathVariable0 = request.parent as Swift.String?, !pathVariable0.isEmpty else {
           throw GoogleCloudGax.RequestError.binding("'request.parent' is not set or is empty")
@@ -195,7 +195,7 @@ extension Clients {
       req.setValue(Clients.clientHeader, forHTTPHeaderField: "X-Goog-Api-Client")
       let (data, _) = try await self.inner.rpc(for: req).get()
       return try GoogleCloudWkt._ProtoJSONDecoder().decode(
-        GoogleApiServiceusageV1.BatchGetServicesResponse.self, from: data)
+        GoogleApiServiceUsageV1.BatchGetServicesResponse.self, from: data)
     }
 
     public func listOperations(

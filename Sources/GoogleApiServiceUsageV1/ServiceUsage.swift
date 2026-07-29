@@ -188,7 +188,7 @@ public class ServiceUsageClient: Clients.ServiceUsageProtocol {
   /// @Snippet(path: "ServiceUsage_GetService")
   public func getService(
     request: GetServiceRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleApiServiceusageV1.Service {
+  ) async throws -> GoogleApiServiceUsageV1.Service {
     try await self.inner.getService(request: request, options: options)
   }
 
@@ -209,7 +209,7 @@ public class ServiceUsageClient: Clients.ServiceUsageProtocol {
   /// @Snippet(path: "ServiceUsage_ListServices")
   public func listServices(
     request: ListServicesRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleApiServiceusageV1.ListServicesResponse {
+  ) async throws -> GoogleApiServiceUsageV1.ListServicesResponse {
     try await self.inner.listServices(request: request, options: options)
   }
 
@@ -232,7 +232,7 @@ public class ServiceUsageClient: Clients.ServiceUsageProtocol {
     byItem: ListServicesRequest, options: GoogleCloudGax.RequestOptions
   ) throws -> any AsyncSequence<Service, Swift.Error> {
     let listRpc = {
-      (token: Swift.String) async throws -> GoogleApiServiceusageV1.ListServicesResponse in
+      (token: Swift.String) async throws -> GoogleApiServiceUsageV1.ListServicesResponse in
       var request = byItem
       request.pageToken = token
       return try await self.listServices(request: request, options: options)
@@ -314,7 +314,7 @@ public class ServiceUsageClient: Clients.ServiceUsageProtocol {
   /// @Snippet(path: "ServiceUsage_BatchGetServices")
   public func batchGetServices(
     request: BatchGetServicesRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleApiServiceusageV1.BatchGetServicesResponse {
+  ) async throws -> GoogleApiServiceUsageV1.BatchGetServicesResponse {
     try await self.inner.batchGetServices(request: request, options: options)
   }
 
@@ -380,11 +380,11 @@ extension Clients {
       .PollableOperation<DisableServiceResponse>
 
     /// See `ServiceUsageClient.getService`.
-    func getService(request: GetServiceRequest) async throws -> GoogleApiServiceusageV1.Service
+    func getService(request: GetServiceRequest) async throws -> GoogleApiServiceUsageV1.Service
 
     /// See `ServiceUsageClient.listServices`.
     func listServices(request: ListServicesRequest) async throws
-      -> GoogleApiServiceusageV1.ListServicesResponse
+      -> GoogleApiServiceUsageV1.ListServicesResponse
 
     /// See `ServiceUsageClient.listServices`.
     func listServices(
@@ -401,7 +401,7 @@ extension Clients {
 
     /// See `ServiceUsageClient.batchGetServices`.
     func batchGetServices(request: BatchGetServicesRequest) async throws
-      -> GoogleApiServiceusageV1.BatchGetServicesResponse
+      -> GoogleApiServiceUsageV1.BatchGetServicesResponse
 
     /// See `ServiceUsageClient.listOperations`.
     func listOperations(request: GoogleLongrunning.ListOperationsRequest) async throws
@@ -441,12 +441,12 @@ extension Clients {
     /// See `ServiceUsageClient.getService`.
     func getService(
       request: GetServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.Service
+    ) async throws -> GoogleApiServiceUsageV1.Service
 
     /// See `ServiceUsageClient.listServices`.
     func listServices(
       request: ListServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.ListServicesResponse
+    ) async throws -> GoogleApiServiceUsageV1.ListServicesResponse
 
     /// See `ServiceUsageClient.listServices`.
     func listServices(
@@ -466,7 +466,7 @@ extension Clients {
     /// See `ServiceUsageClient.batchGetServices`.
     func batchGetServices(
       request: BatchGetServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.BatchGetServicesResponse
+    ) async throws -> GoogleApiServiceUsageV1.BatchGetServicesResponse
 
     /// See `ServiceUsageClient.listOperations`.
     func listOperations(
@@ -540,26 +540,26 @@ extension Clients.ServiceUsageProtocol {
       initialState: .init(done: false, result: nil), poll: poll)
   }
 
-  public func getService(request: GetServiceRequest) async throws -> GoogleApiServiceusageV1.Service
+  public func getService(request: GetServiceRequest) async throws -> GoogleApiServiceUsageV1.Service
   {
     try await self.getService(request: request, options: .init())
   }
 
   public func getService(
     request: GetServiceRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleApiServiceusageV1.Service {
+  ) async throws -> GoogleApiServiceUsageV1.Service {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
   public func listServices(request: ListServicesRequest) async throws
-    -> GoogleApiServiceusageV1.ListServicesResponse
+    -> GoogleApiServiceUsageV1.ListServicesResponse
   {
     try await self.listServices(request: request, options: .init())
   }
 
   public func listServices(
     request: ListServicesRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleApiServiceusageV1.ListServicesResponse {
+  ) async throws -> GoogleApiServiceUsageV1.ListServicesResponse {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 
@@ -573,7 +573,7 @@ extension Clients.ServiceUsageProtocol {
     byItem: ListServicesRequest, options: GoogleCloudGax.RequestOptions
   ) throws -> any AsyncSequence<Service, Swift.Error> {
     let listRpc = {
-      (token: Swift.String) async throws -> GoogleApiServiceusageV1.ListServicesResponse in
+      (token: Swift.String) async throws -> GoogleApiServiceUsageV1.ListServicesResponse in
       throw GoogleCloudGax.RequestError.unimplemented
     }
     return GoogleCloudGax.PaginatedResponseSequence(listRpc: listRpc)
@@ -609,14 +609,14 @@ extension Clients.ServiceUsageProtocol {
   }
 
   public func batchGetServices(request: BatchGetServicesRequest) async throws
-    -> GoogleApiServiceusageV1.BatchGetServicesResponse
+    -> GoogleApiServiceUsageV1.BatchGetServicesResponse
   {
     try await self.batchGetServices(request: request, options: .init())
   }
 
   public func batchGetServices(
     request: BatchGetServicesRequest, options: GoogleCloudGax.RequestOptions
-  ) async throws -> GoogleApiServiceusageV1.BatchGetServicesResponse {
+  ) async throws -> GoogleApiServiceUsageV1.BatchGetServicesResponse {
     throw GoogleCloudGax.RequestError.unimplemented
   }
 

@@ -22,32 +22,40 @@ import GoogleCloudWkt
 import GoogleLongrunning
 import GoogleRpc
 import GoogleCloudGax
+import struct Logging.Logger
 
 extension Clients {
-  final class ServiceUsageRetry: ServiceUsageStub {
+  final class ServiceUsageLogging: ServiceUsageStub {
     let inner: any ServiceUsageStub
-    let options: GoogleCloudGax.ClientOptions
+    let logger: Logger
 
-    public init(_ inner: any ServiceUsageStub, options: GoogleCloudGax.ClientOptions) {
+    public init(_ inner: any ServiceUsageStub, logger: Logger) {
+      var logger = logger
+      logger[metadataKey: "gcp.artifact.id"] = "google-api-serviceusage-v1"
+      logger[metadataKey: "gcp.client.service"] = "serviceusage"
+      logger[metadataKey: "gcp.experimental.swift.client"] = "ServiceUsage"
       self.inner = inner
-      self.options = options
+      self.logger = logger
     }
 
     func _intercept<Input, Output>(
       request: Input,
       options: GoogleCloudGax.RequestOptions,
-      idempotent: Swift.Bool,
+      name: Swift.String,
       action: (Input, GoogleCloudGax.RequestOptions) async throws -> Output,
     ) async throws -> Output {
-      let loop = GoogleCloudGax._RetryLoop(
-        options: options, withDefault: self.options, idempotent: idempotent,
-      )
-      let attempt = { (attemptTimeout: Swift.Duration?) async throws -> Output in
-        var attemptOptions = options
-        attemptOptions.attemptTimeout = attemptTimeout
-        return try await action(request, attemptOptions)
+      var logger = logger
+      logger[metadataKey: "gcp.experimental.swift.request.id"] = "\(UUID())"
+      logger[metadataKey: "gcp.experimental.swift.method"] = .string(name)
+      logger.debug("enter  : \(request) \(options)")
+      do {
+        let output = try await action(request, options)
+        logger.debug("success: \(request) \(options) \(output)")
+        return output
+      } catch let error {
+        logger.debug("error  : \(request) \(options) \(error)")
+        throw error
       }
-      return try await loop.run(attempt: attempt)
     }
 
     public func enableService(
@@ -56,7 +64,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: false,
+        name: "enableService",
         action: {
           (r: EnableServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -71,7 +79,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: false,
+        name: "disableService",
         action: {
           (r: DisableServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -82,14 +90,14 @@ extension Clients {
 
     public func getService(
       request: GetServiceRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.Service {
+    ) async throws -> GoogleApiServiceUsageV1.Service {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: true,
+        name: "getService",
         action: {
           (r: GetServiceRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleApiServiceusageV1.Service
+            -> GoogleApiServiceUsageV1.Service
           in
           return try await self.inner.getService(request: r, options: o)
         })
@@ -97,14 +105,14 @@ extension Clients {
 
     public func listServices(
       request: ListServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.ListServicesResponse {
+    ) async throws -> GoogleApiServiceUsageV1.ListServicesResponse {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: true,
+        name: "listServices",
         action: {
           (r: ListServicesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleApiServiceusageV1.ListServicesResponse
+            -> GoogleApiServiceUsageV1.ListServicesResponse
           in
           return try await self.inner.listServices(request: r, options: o)
         })
@@ -116,7 +124,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: false,
+        name: "batchEnableServices",
         action: {
           (r: BatchEnableServicesRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
@@ -127,14 +135,14 @@ extension Clients {
 
     public func batchGetServices(
       request: BatchGetServicesRequest, options: GoogleCloudGax.RequestOptions
-    ) async throws -> GoogleApiServiceusageV1.BatchGetServicesResponse {
+    ) async throws -> GoogleApiServiceUsageV1.BatchGetServicesResponse {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: true,
+        name: "batchGetServices",
         action: {
           (r: BatchGetServicesRequest, o: GoogleCloudGax.RequestOptions) async throws
-            -> GoogleApiServiceusageV1.BatchGetServicesResponse
+            -> GoogleApiServiceUsageV1.BatchGetServicesResponse
           in
           return try await self.inner.batchGetServices(request: r, options: o)
         })
@@ -146,7 +154,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: true,
+        name: "listOperations",
         action: {
           (r: GoogleLongrunning.ListOperationsRequest, o: GoogleCloudGax.RequestOptions)
             async throws -> GoogleLongrunning.ListOperationsResponse
@@ -161,7 +169,7 @@ extension Clients {
       try await self._intercept(
         request: request,
         options: options,
-        idempotent: true,
+        name: "getOperation",
         action: {
           (r: GoogleLongrunning.GetOperationRequest, o: GoogleCloudGax.RequestOptions) async throws
             -> GoogleLongrunning.Operation
